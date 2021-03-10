@@ -157,12 +157,14 @@ Explanation of the types:
 
 ### createOne
 ```ts
-createOne(document: WithOptionalDefaults<T, Defaults>, options: Options) => Promise<WithId<T> | null>
+createOne(document: WithOptionalDefaults<T, Defaults>, options: Options) =>
+  Promise<WithId<T> | null>
 ```
 
 ### updateOne
 ```ts
-updateOne(query: FilterQuery<T>, update: Partial<T>, options: Options) => Promise<WithId<T> | null>
+updateOne(query: FilterQuery<T>, update: Partial<T>, options: Options) =>
+  Promise<WithId<T> | null>
 ```
 
 ### deleteOne
@@ -172,24 +174,28 @@ deleteOne(query: FilterQuery<T>, options: Options) => Promise<WithId<T> | null>
 
 ### readOne
 ```ts
-readOne(query: FilterQuery<T>, options: Options) => Promise<WithId<T> | null>
+readOne(query: FilterQuery<T>, options: Options) =>
+  Promise<WithId<T> | null>
 ```
 
 ### readMany
 ```ts
-readMany(query: FilterQuery<T>, options: Options) => Promise<Array<WithId<T>>>
+readMany(query: FilterQuery<T>, options: Options) =>
+  Promise<Array<WithId<T>>>
 ```
 
 ### updateMany
 ```ts
-updateMany(query: FilterQuery<T>, update: Partial<T>, options: Options) => Promise<number>
+updateMany(query: FilterQuery<T>, update: Partial<T>, options: Options) =>
+  Promise<number>
 ```
 - **WARNING**: updateMany does not call `postUpdateHook` because of performance reasons
 - returned number means the number of matched documents
 
 ### deleteMany
 ```ts
-deleteMany(query: FilterQuery<T>, options: Options) => Promise<number>
+deleteMany(query: FilterQuery<T>, options: Options) =>
+  Promise<number>
 ```
 - **WARNING**: deleteMany does not call `postDeleteHook` because of performance reasons
 - returned number means the number of matched documents
