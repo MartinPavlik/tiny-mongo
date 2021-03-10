@@ -153,22 +153,44 @@ Explanation of the types:
 - `T` represent the type of document
 - `WithOptionalDefaults<T, Defaults>` means, that you can omit any fields that are present in `config.defaults` of the collection
 - `WithId<T>` means that the document always has `_id` field
+- `Options` differ a bit for each operation, but the types are so complex that you should let your IDE help you
 
-#### `createOne(document: WithOptionalDefaults<T, Defaults>, options) => Promise<WithId<T> | null>`
+### createOne
+```ts
+createOne(document: WithOptionalDefaults<T, Defaults>, options: Options) => Promise<WithId<T> | null>
+```
 
-#### `updateOne(query: FilterQuery<T>, update: Partial<T>, options) => Promise<WithId<T> | null>`
+### updateOne
+```ts
+updateOne(query: FilterQuery<T>, update: Partial<T>, options: Options) => Promise<WithId<T> | null>
+```
 
-#### `deleteOne(query: FilterQuery<T>, options) => Promise<WithId<T> | null>`
+### deleteOne
+```ts
+deleteOne(query: FilterQuery<T>, options: Options) => Promise<WithId<T> | null>
+```
 
-#### `readOne(query: FilterQuery<T>, options) => Promise<WithId<T> | null>`
+### readOne
+```ts
+readOne(query: FilterQuery<T>, options: Options) => Promise<WithId<T> | null>
+```
 
-#### `readMany(query: FilterQuery<T>, options) => Promise<Array<WithId<T>>>`
+### readMany
+```ts
+readMany(query: FilterQuery<T>, options: Options) => Promise<Array<WithId<T>>>
+```
 
-#### `updateMany(query: FilterQuery<T>, update: Partial<T>, options) => Promise<number>`
+### updateMany
+```ts
+updateMany(query: FilterQuery<T>, update: Partial<T>, options: Options) => Promise<number>
+```
 - **WARNING**: updateMany does not call `postUpdateHook` because of performance reasons
 - returned number means the number of matched documents
 
-#### `deleteMany(query: FilterQuery<T>, options) => Promise<number>`
+### deleteMany
+```ts
+deleteMany(query: FilterQuery<T>, options: Options) => Promise<number>
+```
 - **WARNING**: deleteMany does not call `postDeleteHook` because of performance reasons
 - returned number means the number of matched documents
 
