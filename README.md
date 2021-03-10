@@ -12,7 +12,7 @@ I created this package because I had a bunch of projects that used [https://mong
 ```typescript
 import {connect, createCollectionFactory} from '@satankebab/tiny-mongo'
 
-const async run = () => {
+const run = async () => {
   // Connect to the db
   const connection = await connect(process.env.MONGO_URI)
   const createCollection = createCollectionFactory(connection.database)
@@ -200,7 +200,8 @@ deleteMany(query: FilterQuery<T>, options: Options) =>
 - **WARNING**: deleteMany does not call `postDeleteHook` because of performance reasons
 - returned number means the number of matched documents
 
-
+# Typescript compatibility
+- Version `^4.2.3`
 
 
 # Future plans
