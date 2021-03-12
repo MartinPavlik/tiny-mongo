@@ -1,14 +1,15 @@
 require('dotenv').config()
 
-import { connect, createCollectionFactory } from './index'
+import { connect, createCollectionFactory, Connection } from './index'
 
-let connection
+let connection: Connection
 
 beforeAll(async () => {
   connection = await connect(process.env.MONGO_TEST_URI)
 })
 
 afterAll(async () => {
+  connection.database.collection('test-users').drop()
   await connection.close()
 })
 
@@ -34,6 +35,33 @@ describe('createOne', () => {
     expect(result).toHaveProperty('isAdmin', false)
     expect(result).toHaveProperty('_id')
     expect(typeof result).toEqual('object')
+  })
+})
+
+describe('createMany', () => {
+  it('returns created object', async () => {
+    const createCollection = createCollectionFactory(connection.database)
+    type UserType = {
+      name: string
+      isAdmin: boolean,
+    }
+    const defaults = {
+      isAdmin: false,
+    }
+    const userCollection = createCollection<UserType, typeof defaults>('test-users', {
+      defaults
+    })
+
+    const result = await userCollection.createMany([
+      {
+        name: 'abcd'
+      },
+      {
+        name: 'efgh'
+      }
+    ])
+
+    expect(result).toHaveProperty('length', 2)
   })
 })
 

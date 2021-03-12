@@ -1,4 +1,5 @@
 import {
+  CollectionInsertManyOptions,
   CollectionInsertOneOptions,
   CommonOptions,
   Db,
@@ -25,7 +26,6 @@ type CollectionConfig<T, Defaults> = {
     postDeleteHook?: (deletedDocument: WithId<T>) => Promise<void>,
   }
 }
-
 
 export const createCollectionFactory =
   (database: Db) => <T extends Defaults, Defaults extends Object>(
@@ -58,6 +58,19 @@ export const createCollectionFactory =
         }
 
         return newDocument
+      },
+      createMany: async (inputs: CreateOneInputType[], options?: CollectionInsertManyOptions) => {
+        const inputsWithDefaults = defaults ? inputs.map(i => ({
+          ...defaults,
+          ...i,
+        })) : inputs;
+
+        const result = await database.collection<T>(name).insertMany(
+          inputsWithDefaults as any,
+          options,
+        )
+
+        return Object.values(result.insertedIds)
       },
       updateOne: async (query: FilterQuery<T>, update: Partial<T>, options?: UpdateOneOptions): Promise<WithId<T> | null> => {
         const result = await database.collection<T>(name).findOneAndUpdate(
@@ -111,8 +124,12 @@ export const createCollectionFactory =
     }
   }
 
+export type Connection = {
+  database: Db,
+  close: () => void,
+}
 
-export const connect = async (uri: string) => {
+export const connect = async (uri: string): Promise<Connection> => {
   const client = new MongoClient(uri)
   await client.connect()
   const database = client.db()
@@ -121,3 +138,4 @@ export const connect = async (uri: string) => {
     close: () => client.close()
   }
 }
+

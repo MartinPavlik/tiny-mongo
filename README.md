@@ -160,6 +160,12 @@ Explanation of the types:
 createOne(document: WithOptionalDefaults<T, Defaults>, options: Options) =>
   Promise<WithId<T> | null>
 ```
+### createMany
+```ts
+createOne(documents: WithOptionalDefaults<T, Defaults>, options: Options) =>
+  Promise<WithId<T>['_id']>
+```
+- returns just ids of newly created documents
 
 ### updateOne
 ```ts
