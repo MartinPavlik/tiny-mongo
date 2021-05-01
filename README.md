@@ -155,18 +155,17 @@ Explanation of the types:
 - `WithId<T>` means that the document always has `_id` field
 - `Options` differ a bit for each operation, but the types are so complex that you should let your IDE help you
 
+### readOne
+```ts
+readOne(query: FilterQuery<T>, options: Options) =>
+  Promise<WithId<T> | null>
+```
+
 ### createOne
 ```ts
 createOne(document: WithOptionalDefaults<T, Defaults>, options: Options) =>
   Promise<WithId<T> | null>
 ```
-### createMany
-```ts
-createOne(documents: WithOptionalDefaults<T, Defaults>, options: Options) =>
-  Promise<WithId<T>['_id']>
-```
-- returns just ids of newly created documents
-
 ### updateOne
 ```ts
 updateOne(query: FilterQuery<T>, update: Partial<T>, options: Options) =>
@@ -178,17 +177,19 @@ updateOne(query: FilterQuery<T>, update: Partial<T>, options: Options) =>
 deleteOne(query: FilterQuery<T>, options: Options) => Promise<WithId<T> | null>
 ```
 
-### readOne
-```ts
-readOne(query: FilterQuery<T>, options: Options) =>
-  Promise<WithId<T> | null>
-```
-
 ### readMany
 ```ts
 readMany(query: FilterQuery<T>, options: Options) =>
   Promise<Array<WithId<T>>>
 ```
+
+### createMany
+```ts
+createOne(documents: WithOptionalDefaults<T, Defaults>, options: Options) =>
+  Promise<WithId<T>['_id']>
+```
+- returns just ids of newly created documents
+- **WARNING**: createMany does not call `postCreateHook` because of performance reasons
 
 ### updateMany
 ```ts

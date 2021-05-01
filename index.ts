@@ -51,7 +51,7 @@ export const createCollectionFactory =
 
         const newDocument = result.ops && result.result.ok ? result.ops[0] : undefined
 
-        if (!newDocument) throw new Error('Fa`iled to create new document')
+        if (!newDocument) throw new Error('Failed to create new document')
 
         if (hooks && hooks.postCreateHook) {
           await hooks.postCreateHook(newDocument)
